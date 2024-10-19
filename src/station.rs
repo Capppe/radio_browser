@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::{ApiItem, ApiResult};
 
+type StationResult = ApiResult<Station>;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Station {
     changeuuid: Option<String>,
@@ -92,7 +94,7 @@ impl StationHandler {
         }
     }
 
-    async fn get_stations_by_field(&self, field: &str, value: &str) -> ApiResult
+    async fn get_stations_by_field(&self, field: &str, value: &str) -> StationResult
     where
         Self: ApiItem,
     {
@@ -109,66 +111,66 @@ impl StationHandler {
 
         let stations: Vec<Station> = response.json().await?;
 
-        return Ok(stations);
+        Ok(stations)
     }
 
-    pub async fn by_uuid(&self, uuid: &str) -> ApiResult {
+    pub async fn by_uuid(&self, uuid: &str) -> StationResult {
         Ok(self.get_stations_by_field("uuid", uuid).await?)
     }
 
-    pub async fn by_name(&self, name: &str) -> ApiResult {
+    pub async fn by_name(&self, name: &str) -> StationResult {
         Ok(self.get_stations_by_field("name", name).await?)
     }
 
-    pub async fn by_nameexact(&self, name: &str) -> ApiResult {
+    pub async fn by_nameexact(&self, name: &str) -> StationResult {
         Ok(self.get_stations_by_field("nameexact", name).await?)
     }
 
-    pub async fn by_codec(&self, codec: &str) -> ApiResult {
+    pub async fn by_codec(&self, codec: &str) -> StationResult {
         Ok(self.get_stations_by_field("codec", codec).await?)
     }
 
-    pub async fn by_codecexact(&self, codec: &str) -> ApiResult {
+    pub async fn by_codecexact(&self, codec: &str) -> StationResult {
         Ok(self.get_stations_by_field("codecexact", codec).await?)
     }
 
-    pub async fn by_country(&self, country: &str) -> ApiResult {
+    pub async fn by_country(&self, country: &str) -> StationResult {
         Ok(self.get_stations_by_field("country", country).await?)
     }
 
-    pub async fn by_countryexact(&self, country: &str) -> ApiResult {
+    pub async fn by_countryexact(&self, country: &str) -> StationResult {
         Ok(self.get_stations_by_field("countryexact", country).await?)
     }
 
-    pub async fn by_countrycodeexact(&self, country: &str) -> ApiResult {
+    pub async fn by_countrycodeexact(&self, country: &str) -> StationResult {
         Ok(self
             .get_stations_by_field("countrycodeexact", country)
             .await?)
     }
 
-    pub async fn by_state(&self, state: &str) -> ApiResult {
+    pub async fn by_state(&self, state: &str) -> StationResult {
         Ok(self.get_stations_by_field("state", state).await?)
     }
 
-    pub async fn by_stateexact(&self, state: &str) -> ApiResult {
+    pub async fn by_stateexact(&self, state: &str) -> StationResult {
         Ok(self.get_stations_by_field("stateexact", state).await?)
     }
 
-    pub async fn by_language(&self, language: &str) -> ApiResult {
+    pub async fn by_language(&self, language: &str) -> StationResult {
         Ok(self.get_stations_by_field("language", language).await?)
     }
 
-    pub async fn by_languageexact(&self, language: &str) -> ApiResult {
+    pub async fn by_languageexact(&self, language: &str) -> StationResult {
         Ok(self
             .get_stations_by_field("languageexact", language)
             .await?)
     }
 
-    pub async fn by_tag(&self, tag: &str) -> ApiResult {
+    pub async fn by_tag(&self, tag: &str) -> StationResult {
         Ok(self.get_stations_by_field("tag", tag).await?)
     }
 
-    pub async fn by_tagexact(&self, tag: &str) -> ApiResult {
+    pub async fn by_tagexact(&self, tag: &str) -> StationResult {
         Ok(self.get_stations_by_field("tagexact", tag).await?)
     }
 

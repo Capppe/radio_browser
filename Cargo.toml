@@ -1,6 +1,7 @@
 [package]
 name = "radio_browser"
 version = "0.1.0"
+authors = ["Cappe <caspernordstrom00@gmail.com"]
 edition = "2021"
 
 [dependencies]
