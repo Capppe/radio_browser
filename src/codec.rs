@@ -1,7 +1,8 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{ApiHandler, ApiUrl};
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Codec {
     name: String,
     stationcount: u32,

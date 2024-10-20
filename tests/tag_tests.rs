@@ -25,4 +25,15 @@ mod tests {
 
         assert!(!tag.len() > 1)
     }
+
+    #[tokio::test]
+    async fn test_tags3() {
+        let tag_handler = TagHandler::new(None);
+
+        let tag: Vec<Tag> = tag_handler.limit(10).filter("jazz").get().await.unwrap();
+
+        println!("Tags: {:?}", tag);
+
+        assert!(!tag.len() > 1)
+    }
 }

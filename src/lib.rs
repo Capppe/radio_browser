@@ -3,6 +3,8 @@ pub mod country;
 pub mod language;
 pub mod state;
 pub mod station;
+pub mod station_check;
+pub mod station_clicks;
 pub mod tag;
 
 use serde::{Deserialize, Serialize};
@@ -78,6 +80,11 @@ impl<Order: serde::Serialize + Default, U: ApiUrl> ApiHandler<Order, U> {
 
     pub fn hidebroken(mut self, val: bool) -> Self {
         self.params.hidebroken = val;
+        self
+    }
+
+    pub fn filter(mut self, val: &str) -> Self {
+        self.url = format!("{}/{}", self.url, val);
         self
     }
 

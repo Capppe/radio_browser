@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::{ApiHandler, ApiUrl};
+
 #[derive(Deserialize, Debug)]
 pub struct Language {
     name: Option<String>,
@@ -18,3 +20,11 @@ impl Default for LanguageOrder {
         Self::Name
     }
 }
+
+pub struct LanguageUrl;
+
+impl ApiUrl for LanguageUrl {
+    const URL: &'static str = "http://de1.api.radio-browser.info/json/languages";
+}
+
+pub type LanguageHandler = ApiHandler<LanguageOrder, LanguageUrl>;
