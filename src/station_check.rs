@@ -33,7 +33,7 @@ pub struct StationCheck {
     pub geo_long: Option<f64>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 pub enum StationCheckOrder {
     Name,
 }
@@ -44,6 +44,7 @@ impl Default for StationCheckOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct StationCheckUrl;
 
 impl ApiUrl for StationCheckUrl {

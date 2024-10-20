@@ -7,7 +7,7 @@ pub struct Tag {
     pub stationcount: Option<u32>,
 }
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum TagOrder {
     Name,
@@ -20,6 +20,7 @@ impl Default for TagOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct TagUrl;
 
 impl ApiUrl for TagUrl {

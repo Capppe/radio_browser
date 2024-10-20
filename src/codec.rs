@@ -8,7 +8,7 @@ pub struct Codec {
     pub stationcount: u32,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum CodecOrder {
     Name,
@@ -21,6 +21,7 @@ impl Default for CodecOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct CodecUrl;
 
 impl ApiUrl for CodecUrl {

@@ -8,7 +8,7 @@ pub struct State {
     pub stationcount: u32,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum StateOrder {
     Name,
@@ -21,6 +21,7 @@ impl Default for StateOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct StateUrl;
 
 impl ApiUrl for StateUrl {

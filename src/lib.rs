@@ -7,7 +7,7 @@ pub mod station_check;
 pub mod station_clicks;
 pub mod tag;
 
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use serde_json::Value;
 use std::{collections::HashMap, marker::PhantomData};
 
@@ -129,17 +129,4 @@ impl<Order: serde::Serialize + Default, U: ApiUrl> ApiHandler<Order, U> {
 
         Ok(result)
     }
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Country {
-    name: String,
-    iso_3166_1: String,
-    stationcount: u32,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Codec {
-    name: String,
-    stationcount: u32,
 }

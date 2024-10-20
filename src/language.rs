@@ -8,7 +8,7 @@ pub struct Language {
     pub stationcount: Option<u32>,
 }
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum LanguageOrder {
     Name,
@@ -21,6 +21,7 @@ impl Default for LanguageOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct LanguageUrl;
 
 impl ApiUrl for LanguageUrl {

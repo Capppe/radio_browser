@@ -11,7 +11,7 @@ pub struct StationClick {
     pub url: String,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum StationClickOrder {
     Name,
@@ -24,6 +24,7 @@ impl Default for StationClickOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct StationClickUrl;
 
 impl ApiUrl for StationClickUrl {

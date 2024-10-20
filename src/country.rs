@@ -1,14 +1,15 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{ApiHandler, ApiUrl};
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Country {
     pub name: String,
     pub iso_3166_1: Option<String>,
     pub stationcount: u32,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum CountryOrder {
     Name,
@@ -21,6 +22,7 @@ impl Default for CountryOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct CountryUrl;
 
 impl ApiUrl for CountryUrl {
