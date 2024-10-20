@@ -1,8 +1,6 @@
+use crate::{ApiHandler, ApiUrl};
+
 use serde::{Deserialize, Serialize};
-
-use crate::{ApiItem, ApiResult};
-
-type StationResult = ApiResult<Station>;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Station {
@@ -44,30 +42,8 @@ pub struct Station {
     has_extended_info: bool,
 }
 
-impl Station {}
-
 #[derive(Serialize)]
-struct Parameters {
-    order: StationOrder,
-    reverse: bool,
-    offset: u32,
-    limit: u32,
-    hidebroken: bool,
-}
-
-impl Default for Parameters {
-    fn default() -> Self {
-        Self {
-            order: StationOrder::default(),
-            reverse: false,
-            offset: 0,
-            limit: 10000,
-            hidebroken: false,
-        }
-    }
-}
-
-#[derive(Serialize)]
+#[serde(rename_all = "lowercase")]
 pub enum StationOrder {
     Name,
     Url,
@@ -79,124 +55,85 @@ impl Default for StationOrder {
     }
 }
 
-pub struct StationHandler {
-    client: reqwest::Client,
-    params: Parameters,
+pub struct StationUrl;
+
+impl ApiUrl for StationUrl {
+    const URL: &'static str = "https://de1.api.radio-browser.info/json/stations";
 }
 
-impl ApiItem for StationHandler {}
+pub type StationHandler = ApiHandler<StationOrder, StationUrl>;
 
-impl StationHandler {
-    pub fn new() -> Self {
-        Self {
-            client: reqwest::Client::new(),
-            params: Parameters::default(),
-        }
-    }
-
-    async fn get_stations_by_field(&self, field: &str, value: &str) -> StationResult
-    where
-        Self: ApiItem,
-    {
-        let request_url =
-            format!("http://de1.api.radio-browser.info/json/stations/by{field}/{value}",);
-
-        let response = self
-            .client
-            .post(&request_url)
-            .header(reqwest::header::USER_AGENT, self.user_agent())
-            .form(&self.params)
-            .send()
-            .await?;
-
-        let stations: Vec<Station> = response.json().await?;
-
-        Ok(stations)
-    }
-
-    pub async fn by_uuid(&self, uuid: &str) -> StationResult {
-        Ok(self.get_stations_by_field("uuid", uuid).await?)
-    }
-
-    pub async fn by_name(&self, name: &str) -> StationResult {
-        Ok(self.get_stations_by_field("name", name).await?)
-    }
-
-    pub async fn by_nameexact(&self, name: &str) -> StationResult {
-        Ok(self.get_stations_by_field("nameexact", name).await?)
-    }
-
-    pub async fn by_codec(&self, codec: &str) -> StationResult {
-        Ok(self.get_stations_by_field("codec", codec).await?)
-    }
-
-    pub async fn by_codecexact(&self, codec: &str) -> StationResult {
-        Ok(self.get_stations_by_field("codecexact", codec).await?)
-    }
-
-    pub async fn by_country(&self, country: &str) -> StationResult {
-        Ok(self.get_stations_by_field("country", country).await?)
-    }
-
-    pub async fn by_countryexact(&self, country: &str) -> StationResult {
-        Ok(self.get_stations_by_field("countryexact", country).await?)
-    }
-
-    pub async fn by_countrycodeexact(&self, country: &str) -> StationResult {
-        Ok(self
-            .get_stations_by_field("countrycodeexact", country)
-            .await?)
-    }
-
-    pub async fn by_state(&self, state: &str) -> StationResult {
-        Ok(self.get_stations_by_field("state", state).await?)
-    }
-
-    pub async fn by_stateexact(&self, state: &str) -> StationResult {
-        Ok(self.get_stations_by_field("stateexact", state).await?)
-    }
-
-    pub async fn by_language(&self, language: &str) -> StationResult {
-        Ok(self.get_stations_by_field("language", language).await?)
-    }
-
-    pub async fn by_languageexact(&self, language: &str) -> StationResult {
-        Ok(self
-            .get_stations_by_field("languageexact", language)
-            .await?)
-    }
-
-    pub async fn by_tag(&self, tag: &str) -> StationResult {
-        Ok(self.get_stations_by_field("tag", tag).await?)
-    }
-
-    pub async fn by_tagexact(&self, tag: &str) -> StationResult {
-        Ok(self.get_stations_by_field("tagexact", tag).await?)
-    }
-
-    // Parameters
-    pub fn order(mut self, val: StationOrder) -> Self {
-        self.params.order = val;
+impl<'a> StationHandler {
+    pub fn by_uuid(mut self, uuid: &str) -> Self {
+        self.url = format!("{}/byuuid/{}", self.url, uuid);
         self
     }
 
-    pub fn reverse(mut self, val: bool) -> Self {
-        self.params.reverse = val;
+    pub fn by_name(mut self, name: &str) -> Self {
+        self.url = format!("{}/byname/{}", self.url, name);
         self
     }
 
-    pub fn offset(mut self, val: u32) -> Self {
-        self.params.offset = val;
+    pub fn by_nameexact(mut self, name: &str) -> Self {
+        self.url = format!("{}/bynameexact/{}", self.url, name);
         self
     }
 
-    pub fn limit(mut self, val: u32) -> Self {
-        self.params.limit = val;
+    pub fn by_codec(mut self, codec: &str) -> Self {
+        self.url = format!("{}/bycodec/{}", self.url, codec);
         self
     }
 
-    pub fn hidebroken(mut self, val: bool) -> Self {
-        self.params.hidebroken = val;
+    pub fn by_codecexact(mut self, codec: &str) -> Self {
+        self.url = format!("{}/bycodecexact/{}", self.url, codec);
+        self
+    }
+
+    pub fn by_country(mut self, country: &str) -> Self {
+        let mut country = country.to_string();
+        let c = format!("{}{country}", country.remove(0).to_uppercase());
+
+        self.url = format!("{}/bycountry/{}", self.url, c);
+        self
+    }
+
+    pub fn by_countryexact(mut self, country: &str) -> Self {
+        self.url = format!("{}/bycountryexact/{}", self.url, country);
+        self
+    }
+
+    pub fn by_countrycodeexact(mut self, country: &str) -> Self {
+        self.url = format!("{}/bycountrycodeexact/{}", self.url, country);
+        self
+    }
+
+    pub fn by_state(mut self, state: &str) -> Self {
+        self.url = format!("{}/bystate/{}", self.url, state);
+        self
+    }
+
+    pub fn by_stateexact(mut self, state: &str) -> Self {
+        self.url = format!("{}/bystateexact/{}", self.url, state);
+        self
+    }
+
+    pub fn by_language(mut self, language: &str) -> Self {
+        self.url = format!("{}/bylanguage/{}", self.url, language);
+        self
+    }
+
+    pub fn by_languageexact(mut self, language: &str) -> Self {
+        self.url = format!("{}/bylanguageexact/{}", self.url, language);
+        self
+    }
+
+    pub fn by_tag(mut self, tag: &str) -> Self {
+        self.url = format!("{}/bytag/{}", self.url, tag);
+        self
+    }
+
+    pub fn by_tagexact(mut self, tag: &str) -> Self {
+        self.url = format!("{}/bytagexact/{}", self.url, tag);
         self
     }
 }
