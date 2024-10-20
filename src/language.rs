@@ -4,8 +4,8 @@ use crate::{ApiHandler, ApiUrl};
 
 #[derive(Deserialize, Debug)]
 pub struct Language {
-    name: Option<String>,
-    stationcount: Option<u32>,
+    pub name: Option<String>,
+    pub stationcount: Option<u32>,
 }
 
 #[derive(Serialize, Debug)]

@@ -3,9 +3,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Debug)]
 pub struct State {
-    name: String,
-    country: String,
-    stationcount: u32,
+    pub name: String,
+    pub country: String,
+    pub stationcount: u32,
 }
 
 #[derive(Serialize)]

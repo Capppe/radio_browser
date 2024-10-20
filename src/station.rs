@@ -4,45 +4,45 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Station {
-    changeuuid: Option<String>,
-    stationuuid: Option<String>,
-    serveruuid: Option<String>,
-    name: String,
-    url: String,
-    url_resolved: String,
-    homepage: String,
-    favicon: String,
-    tags: String,
-    country: String,
-    countrycode: String,
-    iso_3166_2: Option<String>,
-    state: String,
-    language: String,
-    languagecodes: String,
-    votes: u32,
-    lastchangetime: String,
-    lastchangetime_iso8601: String,
-    codec: String,
-    bitrate: u32,
-    hls: u8,
-    lastcheckok: u8,
-    lastchecktime: String,
-    lastchecktime_iso8601: String,
-    lastcheckoktime: String,
-    lastcheckoktime_iso8601: String,
-    lastlocalchecktime: String,
-    lastlocalchecktime_iso8601: String,
-    clicktimestamp: String,
-    clicktimestamp_iso8601: Option<String>,
-    clickcount: u32,
-    clicktrend: i32,
-    ssl_error: u8,
-    geo_lat: Option<f64>,
-    geo_long: Option<f64>,
-    has_extended_info: bool,
+    pub changeuuid: Option<String>,
+    pub stationuuid: Option<String>,
+    pub serveruuid: Option<String>,
+    pub name: String,
+    pub url: String,
+    pub url_resolved: String,
+    pub homepage: String,
+    pub favicon: String,
+    pub tags: String,
+    pub country: String,
+    pub countrycode: String,
+    pub iso_3166_2: Option<String>,
+    pub state: String,
+    pub language: String,
+    pub languagecodes: String,
+    pub votes: u32,
+    pub lastchangetime: String,
+    pub lastchangetime_iso8601: String,
+    pub codec: String,
+    pub bitrate: u32,
+    pub hls: u8,
+    pub lastcheckok: u8,
+    pub lastchecktime: String,
+    pub lastchecktime_iso8601: String,
+    pub lastcheckoktime: String,
+    pub lastcheckoktime_iso8601: String,
+    pub lastlocalchecktime: String,
+    pub lastlocalchecktime_iso8601: String,
+    pub clicktimestamp: String,
+    pub clicktimestamp_iso8601: Option<String>,
+    pub clickcount: u32,
+    pub clicktrend: i32,
+    pub ssl_error: u8,
+    pub geo_lat: Option<f64>,
+    pub geo_long: Option<f64>,
+    pub has_extended_info: bool,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum StationOrder {
     Name,
@@ -55,6 +55,7 @@ impl Default for StationOrder {
     }
 }
 
+#[derive(Clone)]
 pub struct StationUrl;
 
 impl ApiUrl for StationUrl {

@@ -13,7 +13,7 @@ use std::{collections::HashMap, marker::PhantomData};
 
 pub type ApiResult<T> = Result<Vec<T>, reqwest::Error>;
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 pub struct Parameters<Order> {
     order: Order,
     reverse: bool,
@@ -39,6 +39,7 @@ pub trait ApiUrl {
     const URL: &'static str;
 }
 
+#[derive(Clone)]
 pub struct ApiHandler<Order, U: ApiUrl> {
     client: reqwest::Client,
     params: Parameters<Order>,

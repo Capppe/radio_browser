@@ -3,8 +3,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Tag {
-    name: Option<String>,
-    stationcount: Option<u32>,
+    pub name: Option<String>,
+    pub stationcount: Option<u32>,
 }
 
 #[derive(Serialize, Debug)]

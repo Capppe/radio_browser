@@ -3,9 +3,9 @@ use serde::Serialize;
 use crate::{ApiHandler, ApiUrl};
 
 pub struct Country {
-    name: String,
-    iso_3166_1: Option<String>,
-    stationcount: u32,
+    pub name: String,
+    pub iso_3166_1: Option<String>,
+    pub stationcount: u32,
 }
 
 #[derive(Serialize)]

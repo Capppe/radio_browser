@@ -4,11 +4,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct StationClick {
-    ok: bool,
-    message: String,
-    stationuuid: String,
-    name: String,
-    url: String,
+    pub ok: bool,
+    pub message: String,
+    pub stationuuid: String,
+    pub name: String,
+    pub url: String,
 }
 
 #[derive(Serialize)]
