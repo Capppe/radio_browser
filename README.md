@@ -10,4 +10,4 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-radio_browser = { git = "https://github.com/capppe/radio_browser_client" }
+radio_browser = { git = "https://github.com/capppe/radio_browser" }
