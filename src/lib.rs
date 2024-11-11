@@ -112,8 +112,6 @@ impl<Order: serde::Serialize + Default, U: ApiUrl> ApiHandler<Order, U> {
     {
         let request_url = format!("{}", self.url);
 
-        println!("Params: {:?}", self.params());
-
         let response = self
             .client
             .post(&request_url)
@@ -121,9 +119,6 @@ impl<Order: serde::Serialize + Default, U: ApiUrl> ApiHandler<Order, U> {
             .form(&self.params())
             .send()
             .await?;
-
-        println!("Url: {}", request_url);
-        println!("Resp: {:?}", response);
 
         let result: Vec<T> = response.json().await?;
 
